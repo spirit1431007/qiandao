@@ -8,7 +8,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema qiandao
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `qiandao` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `qiandao` DEFAULT CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 USE `qiandao` ;
 
 -- -----------------------------------------------------
@@ -16,7 +16,7 @@ USE `qiandao` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `qiandao`.`user` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(256) CHARACTER SET 'utf8' NOT NULL,
+  `email` VARCHAR(256) NOT NULL,
   `email_verified` TINYINT(1) NOT NULL DEFAULT 0,
   `password` VARBINARY(128) NOT NULL,
   `userkey` VARBINARY(128) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `qiandao`.`tpl` (
   PRIMARY KEY (`id`),
   INDEX `ix_siteurl` (`siteurl` ASC),
   INDEX `ix_sitename` (`sitename` ASC),
-  INDEX `ix_public` (`public` ASC)),
+  INDEX `ix_public` (`public` ASC),
   INDEX `ix_userid` (`userid`))
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8;
