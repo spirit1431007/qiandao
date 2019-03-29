@@ -132,6 +132,7 @@ define (require) ->
             name: 'binux'
             version: 'qiandao'
           entries: ({
+            comment: en.comment
             checked: true
             startedDateTime: (new Date()).toISOString()
             time: 1

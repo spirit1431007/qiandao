@@ -151,6 +151,7 @@
             entry = _ref[_i];
             if (entry.checked) {
               _results.push({
+                comment: entry.comment,
                 request: {
                   method: entry.request.method,
                   url: entry.request.url,
