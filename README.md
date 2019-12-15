@@ -28,7 +28,7 @@
         ```
     2. 启动Docker服务  
         ```
-    	service docker start
+    	systemctl start docker
         ```
 2. 国外主机安装Docker  
 	1. 使用官网地址安装Docker  
@@ -57,16 +57,21 @@
     ```
     systemctl enable docker
     ```
+5. **让通用户也能运行Docker**( **重要** )  
+    ```
+    sudo usermod -aG docker pi
+	su - pi
+    ```
 
 ### 二、下载/更新Docker镜像
 
 1. 国内主机拉取/更新镜像  
     ```
-	docker pull daocloud.io/spirit1431007/qiandao
+	docker pull daocloud.io/spirit1431007/qiandao-arm
 	```
 2. 国外主机拉取/更新镜像  
 	```
-    docker pull spirit1431007/qiandao
+    docker pull spirit1431007/qiandao-arm
     ```
 3. 更新镜像需要删除并重新创建容器（**需要手动备份数据库文件**）,不删除重新创建容器则依然使用创建时的版本,或手动更新代码!  
 
@@ -76,7 +81,7 @@
 	如果在创建容器后,自动启动容器出现问题,可能是端口冲突,你可以选择关闭占用80端口的程序  
 	或更改容器开放端口（容器内程序的监听端口制作时已更改为80）  
 	```
-	docker run -d -p 你指定的端口:80 --name qiandao daocloud.io/spirit1431007/qiandao
+	docker run -d -p 你指定的端口:80 --name qiandao daocloud.io/spirit1431007/qiandao-arm
 	```  
 	注:如果你已经创建了容器,请删除后重新创建  
 2. 国内主机  
@@ -109,26 +114,26 @@
             ```
 		4. 样例(始终重启--开机时,如果Docker服务项已经启动则自动启动该容器)
 		    ```
-		    docker run -d -p 80:80 --name qiandao --restart=always daocloud.io/spirit1431007/qiandao
+		    docker run -d -p 80:80 --name qiandao --restart=always daocloud.io/spirit1431007/qiandao-arm
 	        ```  
 	3. 不需要挂载Volume  
 	    ```
-		docker run -d -p 80:80 --name qiandao daocloud.io/spirit1431007/qiandao
+		docker run -d -p 666:80 --name qiandao daocloud.io/spirit1431007/qiandao-arm
 	    ```  
-	4. 需要挂载Volume(在root目录下创建volume,并连接至容器中/usr/src/app/volume位置,也就是代码目录的volume文件夹)  
+	4. 需要挂载Volume(在/home/pi目录下创建volume,并连接至容器中/usr/src/app/volume位置,也就是代码目录的volume文件夹)  
 	    ```
-		mkdir -p /root/volume
-		docker run -d -p 80:80 --name qiandao -v /root/volume:/usr/src/app/volume daocloud.io/spirit1431007/qiandao
+		mkdir -p /home/pi
+		docker run -d -p 666:80 --name qiandao -v /home/pi/volume:/usr/src/app/volume daocloud.io/spirit1431007/qiandao-arm
 		```  
 3. 国外主机  
 	1. 不需要挂载Volume  
 	    ```
-		docker run -d -p 80:80 --name qiandao spirit1431007/qiandao
+		docker run -d -p 666:80 --name qiandao spirit1431007/qiandao-arm
 	    ```  
-	2. 需要挂载Volume(在root目录下创建volume,并连接至容器中/usr/src/app/volume位置,也就是代码目录的volume文件夹)  
+	2. 需要挂载Volume(在/home/pi目录下创建volume,并连接至容器中/usr/src/app/volume位置,也就是代码目录的volume文件夹)  
 	    ```
-		mkdir -p /root/volume
-		docker run -d -p 80:80 --name qiandao -v /root/volume:/usr/src/app/volume spirit1431007/qiandao
+		mkdir -p /home/pi
+		docker run -d -p 666:80 --name qiandao -v /home/pi/volume:/usr/src/app/volume spirit1431007/qiandao-arm
 		```
 
 ### 四、启动容器  
@@ -171,6 +176,10 @@
 	docker rm -v qiandao
 	```
     使用参数 -v 的作用是为了确保删除容器自动创建的Volume
+4. 启动docker时自动启动容器  
+    ```
+	docker update --restart=always qiandao
+	```
 ### 七、站点其他配置  
 
 其他站点配置请参考 [配置说明][2]
