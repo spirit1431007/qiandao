@@ -106,6 +106,7 @@ define (require, exports, module) ->
 
       har2tpl = (har) ->
         return ({
+            comment: entry.comment
             request:
               method: entry.request.method
               url: entry.request.url

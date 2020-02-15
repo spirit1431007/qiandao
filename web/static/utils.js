@@ -191,6 +191,7 @@
                 en = tpl[_i];
                 _results.push({
                   checked: true,
+                  comment: en.comment,
                   startedDateTime: (new Date()).toISOString(),
                   time: 1,
                   request: {
